@@ -1,0 +1,24 @@
+---
+import { dict, type Lang } from '../../i18n';
+import pages from '../../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(pages, lang);
+const repeats = [0, 1, 2, 3, 4, 5];
+---
+
+<div class="mq" data-live>
+  <div class="mq-track">
+    {repeats.map((r) => (
+      <div class="mq-group" aria-hidden={r > 0 ? 'true' : undefined}>
+        <span class="mq-label">{t.operate}</span>
+        {t.cities.map((c, i) => (
+          <>
+            <span>{c}</span>
+            {i < t.cities.length - 1 && <i class="mq-dot" />}
+          </>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

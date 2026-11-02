@@ -1,0 +1,21 @@
+---
+import Lines from './Lines.astro';
+import Arrow from './Arrow.astro';
+import { dict, url, type Lang } from '../../i18n';
+import chrome from '../../i18n/chrome.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(chrome, lang);
+---
+
+<section class="band-wrap">
+  <div class="band" data-band>
+    <div class="wrap band-in">
+      <Lines text={t.ready} class="h2" />
+      <a class="btn btn--light" href={url(lang, '/contact-us/')} data-rv="up" style="--i:3">
+        <span>{t.consult}</span>
+        <Arrow />
+      </a>
+    </div>
+  </div>
+</section>

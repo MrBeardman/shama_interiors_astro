@@ -1,0 +1,46 @@
+---
+import Social from './ui/Social.astro';
+import { dict, url, LANGS, type Lang } from '../i18n';
+import chrome from '../i18n/chrome.json';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+const { lang, path } = Astro.props;
+const t = dict(chrome, lang);
+const other = LANGS.find((l) => l.code !== lang)!;
+const letters = [...t.brand];
+---
+
+<footer class="ft">
+  <div class="wrap ft-top">
+    <a class="ft-logo" href={url(lang, '/')} aria-label={t.brand}>
+      <img src="/media/logo.webp" width="325" height="75" alt={t.brand} loading="lazy" />
+    </a>
+    <nav class="ft-nav" aria-label={t.menu}>
+      {t.nav.map((n) => (
+        <a href={url(lang, n.href)}>{n.label}</a>
+      ))}
+    </nav>
+    <div class="ft-side">
+      <Social />
+      <a class="lang" href={url(other.code, path)} hreflang={other.code} lang={other.code} aria-label={t.switch}>
+        {other.short}
+      </a>
+    </div>
+  </div>
+  <div class="wm" aria-hidden="true" data-rv="lines">
+    {letters.map((c, i) => (
+      <span class="w">
+        <span class="wi" style={`--i:${i * 0.5}`}>
+          {c === ' ' ? ' ' : c}
+        </span>
+      </span>
+    ))}
+  </div>
+  <div class="wrap ft-base">
+    <span>{t.brand}</span>
+    <span>{t.rights}</span>
+  </div>
+</footer>

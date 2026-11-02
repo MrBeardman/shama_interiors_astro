@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/home/01-hero.astro';
+import Marquee from '../components/ui/Marquee.astro';
+import About from '../components/home/03-about.astro';
+import Gallery from '../components/home/04-gallery.astro';
+import Process from '../components/home/05-process.astro';
+import Staging from '../components/home/06-staging.astro';
+import Price from '../components/ui/Price.astro';
+import Band from '../components/ui/Band.astro';
+import { dict, type Lang } from '../i18n';
+import pages from '../i18n/pages.json';
+import media from '../data/media.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(pages, lang);
+const hero = media['hero-about'].widths;
+---
+
+<Base lang={lang} title={t.home_title} description={t.home_desc} path="/">
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    type="image/webp"
+    imagesrcset={hero.map((w) => `/media/hero-about-${w}.webp ${w}w`).join(', ')}
+    imagesizes="(max-width: 999px) max(100vw, 66vh), max(58vw, 150vh)"
+    fetchpriority="high"
+  />
+  <Hero lang={lang} />
+  <Marquee lang={lang} />
+  <About lang={lang} />
+  <Gallery lang={lang} />
+  <Process lang={lang} />
+  <Staging lang={lang} />
+  <Price lang={lang} />
+  <Band lang={lang} />
+</Base>

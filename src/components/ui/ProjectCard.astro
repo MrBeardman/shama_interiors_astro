@@ -1,0 +1,32 @@
+---
+import Frame from './Frame.astro';
+import { url, type Lang } from '../../i18n';
+import type { Project } from '../../data/projects';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  index: number;
+  sizes?: string;
+  class?: string;
+}
+const { project, lang, index, sizes = '(max-width: 900px) 170vw, 900px', class: cls } = Astro.props;
+const cover = project.photos[0];
+---
+
+<a class:list={['card', cls]} href={url(lang, `/inspiration/${project.slug}/`)}>
+  <div class="card-frame">
+    <Frame
+      name={cover.name}
+      alt={cover.alt[lang]}
+      sizes={sizes}
+      i={index % 3}
+      imgClass="card-img"
+      vt={`p-${project.slug}`}
+    />
+  </div>
+  <div class="card-meta">
+    <span class="num">{String(index + 1).padStart(2, '0')}</span>
+    <span class="card-title">{project.title[lang]}</span>
+  </div>
+</a>

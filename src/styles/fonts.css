@@ -1,0 +1,30 @@
+/* Self-hosted (OFL). Josefin Sans = the client's display face, variable. Inter replaces Arial for body text.
+   The latin subset covers English and Spanish, including the euro sign. */
+@font-face {
+  font-family: 'Josefin Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 700;
+  src: url(/fonts/josefin-sans-latin-wght-normal.woff2) format('woff2-variations');
+}
+@font-face {
+  font-family: 'Josefin Sans';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 700;
+  src: url(/fonts/josefin-sans-latin-wght-italic.woff2) format('woff2-variations');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/fonts/inter-latin-400-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(/fonts/inter-latin-500-normal.woff2) format('woff2');
+}

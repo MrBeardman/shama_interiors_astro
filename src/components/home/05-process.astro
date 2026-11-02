@@ -1,0 +1,129 @@
+---
+import Lines from '../ui/Lines.astro';
+import Arrow from '../ui/Arrow.astro';
+import { dict, url, type Lang } from '../../i18n';
+import chrome from '../../i18n/chrome.json';
+import pages from '../../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const c = dict(chrome, lang);
+const t = dict(pages, lang);
+---
+
+<section class="hp sec">
+  <div class="wrap">
+    <div class="hp-head">
+      <Lines text={t.how_h1} class="h2" />
+      <p data-rv="up" style="--i:2">
+        {t.how_p}
+      </p>
+    </div>
+    <ol class="hp-steps" data-rv="group">
+      <li class="hp-line" aria-hidden="true"></li>
+      {t.steps.map((s, i) => (
+        <li class="hp-step" style={`--i:${i}`}>
+          <i class="hp-dot" />
+          <span class="num">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="h3">{s.t}</h3>
+        </li>
+      ))}
+    </ol>
+    <a class="more" href={url(lang, '/how-we-work/')} data-rv="up">
+      <span>{c.nav[2].label}</span>
+      <Arrow />
+    </a>
+  </div>
+</section>
+
+<style is:global>
+  .hp-head {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 20px clamp(32px, 6vw, 90px);
+    align-items: end;
+    margin-bottom: clamp(44px, 6vw, 84px);
+  }
+  .hp-steps {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 28px);
+    margin-bottom: clamp(32px, 4vw, 52px);
+  }
+  .hp-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8px;
+    height: 1px;
+    background: var(--terra);
+    transform-origin: 0 50%;
+  }
+  .hp-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 36px;
+  }
+  .hp-step .h3 {
+    font-size: clamp(20px, 1.8vw, 30px);
+  }
+  .hp-dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 6px var(--paper);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .js [data-rv='group'] .hp-line {
+      transition: transform 1500ms var(--ease-io);
+    }
+    .js [data-rv='group']:not(.in) .hp-line {
+      transform: scaleX(0);
+    }
+    .js [data-rv='group'] .hp-step > * {
+      transition:
+        opacity 620ms var(--ease-out),
+        transform 860ms var(--ease-out);
+      transition-delay: calc(180ms + var(--i) * 170ms);
+    }
+    .js [data-rv='group']:not(.in) .hp-step > * {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .js [data-rv='group']:not(.in) .hp-step > .hp-dot {
+      transform: scale(0.6);
+    }
+  }
+  @media (max-width: 999px) {
+    .hp-head {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hp-steps {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 26px;
+    }
+    .hp-line {
+      left: 8px;
+      right: auto;
+      top: 4px;
+      bottom: 12px;
+      width: 1px;
+      height: auto;
+      transform-origin: 50% 0;
+    }
+    .hp-step {
+      padding: 0 0 0 40px;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .js [data-rv='group']:not(.in) .hp-line {
+        transform: scaleY(0);
+      }
+    }
+  }
+</style>

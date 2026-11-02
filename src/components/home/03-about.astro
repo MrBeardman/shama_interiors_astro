@@ -1,0 +1,65 @@
+---
+import Frame from '../ui/Frame.astro';
+import Lines from '../ui/Lines.astro';
+import Lit from '../ui/Lit.astro';
+import Swash from '../ui/Swash.astro';
+import Arrow from '../ui/Arrow.astro';
+import { dict, url, type Lang } from '../../i18n';
+import chrome from '../../i18n/chrome.json';
+import pages from '../../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const c = dict(chrome, lang);
+const t = dict(pages, lang);
+---
+
+<section class="hab sec">
+  <div class="wrap hab-grid">
+    <div class="hab-copy">
+      <Lines text={t.about_h1} class="h2" />
+      <Swash />
+      <Lit text={t.about_p} />
+      <a class="more" href={url(lang, '/about-us/')} data-rv="up">
+        <span>{c.nav[0].label}</span>
+        <Arrow />
+      </a>
+    </div>
+    <Frame
+      class="hab-photo"
+      name="about"
+      alt={t.about_img_alt}
+      sizes="(max-width: 860px) 170vw, 80vw"
+      ratio="4 / 5"
+      from="left"
+    />
+  </div>
+</section>
+
+<style is:global>
+  .hab-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(36px, 7vw, 110px);
+    align-items: start;
+  }
+  .hab-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .hab-photo {
+    position: sticky;
+    top: calc(var(--hdr) + 24px);
+  }
+  @media (max-width: 860px) {
+    .hab-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hab-photo {
+      position: relative;
+      top: 0;
+      order: -1;
+    }
+  }
+</style>

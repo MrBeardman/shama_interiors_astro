@@ -1,0 +1,17 @@
+---
+/** The flourish from the logo's signature line; draws itself when it comes into view. */
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+---
+
+<svg class:list={['sw', cls]} viewBox="0 0 220 24" fill="none" aria-hidden="true" data-rv="draw">
+  <path
+    pathLength="1"
+    d="M2 19C34 7 62 21 104 13S172 1 218 11"
+    stroke="currentColor"
+    stroke-width="1.4"
+    stroke-linecap="round"
+  ></path>
+</svg>

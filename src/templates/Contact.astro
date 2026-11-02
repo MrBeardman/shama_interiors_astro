@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import Frame from '../components/ui/Frame.astro';
+import Lines from '../components/ui/Lines.astro';
+import Swash from '../components/ui/Swash.astro';
+import Social from '../components/ui/Social.astro';
+import { dict, type Lang } from '../i18n';
+import pages from '../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(pages, lang);
+const items = [
+  { label: t.reception, value: 'info@schamainteriors.es', href: 'mailto:info@schamainteriors.es' },
+  { label: t.head_c, value: 'jana@schamainteriors.es', href: 'mailto:jana@schamainteriors.es' },
+  { label: t.phone, value: '+44 7401 560 665', href: 'https://wa.me/447401560665' },
+];
+---
+
+<Base lang={lang} title={t.contact_title} path="/contact-us/">
+  <section class="ct">
+    <div class="ct-copy">
+      <Lines text={t.contact_h1} tag="h1" class="h1" />
+      <Swash />
+      <Lines text={t.contact_lead} tag="p" class="ct-lead" offset={2} />
+      <dl class="ct-list">
+        {items.map((it, i) => (
+          <div class="ct-item" data-rv="up" style={`--i:${i + 3}`}>
+            <dt>{it.label}</dt>
+            <dd>
+              <a href={it.href}>{it.value}</a>
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <div class="ct-soc" data-rv="up" style="--i:6">
+        <Social />
+      </div>
+    </div>
+    <Frame
+      class="ct-photo"
+      name="contact"
+      alt={t.contact_img_alt}
+      sizes="(max-width: 900px) max(100vw, 66vh), max(50vw, 150vh)"
+      from="right"
+      eager
+    />
+  </section>
+</Base>
+
+<style is:global>
+  .ct {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: 100svh;
+    padding-top: var(--hdr);
+  }
+  .ct-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 22px;
+    padding: clamp(32px, 5vw, 72px) clamp(24px, 4vw, 64px) clamp(32px, 5vw, 72px) var(--gut);
+  }
+  .ct-lead {
+    color: var(--ink);
+    font: 300 clamp(23px, 2.2vw, 32px) / 1.3 var(--display);
+    text-wrap: balance;
+  }
+  .ct-list {
+    align-self: stretch;
+    margin: 8px 0 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ct-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 20px;
+    padding-block: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .ct-item dd {
+    margin: 0;
+  }
+  .ct-item a {
+    display: inline-block;
+    padding-block: 4px;
+    color: var(--ink);
+    font: 400 clamp(19px, 1.6vw, 23px) / 1.3 var(--display);
+    text-decoration: none;
+    background: linear-gradient(var(--terra), var(--terra)) 0 100% / 0 1px no-repeat;
+    transition: background-size 380ms var(--ease-out);
+  }
+  .ct-item a:focus-visible {
+    background-size: 100% 1px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .ct-item a:hover {
+      background-size: 100% 1px;
+    }
+  }
+  .ct-soc {
+    display: flex;
+    gap: 6px;
+    margin-left: -9px;
+  }
+  @media (max-width: 480px) {
+    .ct-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  @media (max-width: 900px) {
+    .ct {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+    .ct-photo {
+      order: -1;
+      height: 36svh;
+    }
+    .ct-copy {
+      padding: 28px var(--gut) 52px;
+    }
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+/** Heading whose words rise out of masks, one after another. Real spaces stay between the words. */
+interface Props {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
+  class?: string;
+  /** Extra stagger steps before the first word. */
+  offset?: number;
+}
+const { text, tag: Tag = 'h2', class: cls, offset = 0 } = Astro.props;
+const words = text.split(' ');
+---
+
+<Tag class={cls} data-rv="lines" style={offset ? `--o:${offset}` : undefined}>
+  {words.map((w, i) => (
+    <>
+      <span class="w">
+        <span class="wi" style={`--i:${i}`}>
+          {w}
+        </span>
+      </span>{' '}
+    </>
+  ))}
+</Tag>

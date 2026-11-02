@@ -1,0 +1,154 @@
+---
+import Photo from '../ui/Photo.astro';
+import Lines from '../ui/Lines.astro';
+import Swash from '../ui/Swash.astro';
+import Arrow from '../ui/Arrow.astro';
+import { dict, url, type Lang } from '../../i18n';
+import chrome from '../../i18n/chrome.json';
+import pages from '../../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const c = dict(chrome, lang);
+const t = dict(pages, lang);
+// One photo per menu row, as on the old home page.
+const photos = ['hero-about', 'hero-inspirations', 'hero-how', 'hero-staging', 'hero-contact'];
+const sizes = '(max-width: 999px) max(100vw, 66vh), max(58vw, 150vh)';
+---
+
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow" data-rv="up">
+      {t.home_eyebrow}
+    </p>
+    <Lines text={t.home_h1} tag="h1" class="h1" offset={2} />
+    <Swash />
+    <a class="btn" href={url(lang, '/contact-us/')} data-rv="up" style="--i:5">
+      <span>{c.consult}</span>
+      <Arrow />
+    </a>
+    <ul class="hero-list">
+      {c.nav.map((n, i) => (
+        <li data-rv="up" style={`--i:${i + 6}`}>
+          <a class="hero-row" href={url(lang, n.href)} data-hero-row>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="hero-label">{n.label}</span>
+            <Arrow />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <figure class="hero-media fr" data-rv="clip" data-from="right">
+    <div class="fr-clip">
+      <div class="fr-par" data-par>
+        {photos.map((name, i) => (
+          <Photo
+            class={`hero-img${i === 0 ? ' is-on' : ''}`}
+            name={name}
+            alt={i === 0 ? t.hero_alts[i] : ''}
+            sizes={sizes}
+            eager={i === 0}
+            data-hero-img
+          />
+        ))}
+      </div>
+    </div>
+  </figure>
+</section>
+
+<style is:global>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    min-height: 100svh;
+    padding-top: var(--hdr);
+  }
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: clamp(14px, 2.2vh, 24px);
+    padding: clamp(20px, 4vh, 48px) clamp(24px, 4vw, 64px) clamp(20px, 4vh, 48px) var(--gut);
+  }
+  .hero-copy .h1 {
+    font-size: clamp(40px, min(4.4vw, 8.6vh), 72px);
+  }
+  .hero-list {
+    align-self: stretch;
+    margin-top: clamp(6px, 1.4vh, 16px);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: clamp(44px, 6vh, 56px);
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    font: 400 clamp(20px, 1.8vw, 26px) / 1.1 var(--display);
+    text-decoration: none;
+  }
+  .hero-label {
+    flex: 1;
+    padding-top: 0.15em;
+    transition: transform 420ms var(--ease-out);
+  }
+  .hero-row .arrow {
+    color: var(--terra);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition:
+      opacity 240ms ease,
+      transform 420ms var(--ease-out);
+  }
+  .hero-row:focus-visible .hero-label {
+    transform: translateX(8px);
+  }
+  .hero-row:focus-visible .arrow {
+    opacity: 1;
+    transform: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .hero-row:hover .hero-label {
+      transform: translateX(8px);
+    }
+    .hero-row:hover .arrow {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .hero-media {
+    min-height: 100%;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 640ms ease;
+  }
+  .hero-img.is-on {
+    opacity: 1;
+  }
+  @media (max-width: 999px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+    .hero-media {
+      order: -1;
+      min-height: 0;
+      height: 38svh;
+    }
+    .hero-copy {
+      padding: 24px var(--gut) 40px;
+    }
+    .hero-copy .h1 {
+      font-size: clamp(38px, 10.4vw, 66px);
+    }
+    .hero-row .arrow {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

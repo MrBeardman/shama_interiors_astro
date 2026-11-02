@@ -1,0 +1,16 @@
+---
+/** Paragraph whose words light up as it scrolls through. */
+interface Props {
+  text: string;
+  class?: string;
+}
+const { text, class: cls } = Astro.props;
+---
+
+<p class:list={['lit', cls]} data-lit>
+  {text.split(' ').map((w) => (
+    <>
+      <span class="lw">{w}</span>{' '}
+    </>
+  ))}
+</p>

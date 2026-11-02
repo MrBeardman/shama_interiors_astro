@@ -1,0 +1,128 @@
+---
+import ProjectCard from '../ui/ProjectCard.astro';
+import Lines from '../ui/Lines.astro';
+import Arrow from '../ui/Arrow.astro';
+import { PROJECTS } from '../../data/projects';
+import { dict, url, type Lang } from '../../i18n';
+import chrome from '../../i18n/chrome.json';
+import pages from '../../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const c = dict(chrome, lang);
+const t = dict(pages, lang);
+---
+
+<section class="hs" data-hs>
+  <div class="hs-sticky">
+    <div class="wrap hs-head">
+      <Lines text={t.insp_h1} class="h2" />
+      <a class="more" href={url(lang, '/inspirations/')} data-rv="up">
+        <span>{c.nav[1].label}</span>
+        <Arrow />
+      </a>
+    </div>
+    <div class="hs-track" data-hs-track>
+      {PROJECTS.map((p, i) => (
+        <ProjectCard project={p} lang={lang} index={i} class="hs-card" />
+      ))}
+    </div>
+    <div class="wrap hs-barbox" aria-hidden="true">
+      <i class="hs-bar" data-hs-bar></i>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .hs {
+    background: var(--sand);
+    padding-block: var(--sec);
+  }
+  .hs-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 32px;
+    flex-wrap: wrap;
+    margin-bottom: clamp(28px, 4vw, 48px);
+  }
+  .hs-track {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px clamp(16px, 2vw, 28px);
+    width: min(1320px, 100% - 2 * var(--gut));
+    margin-inline: auto;
+  }
+  .hs-card .card-frame {
+    aspect-ratio: 4 / 5;
+  }
+  .hs-card:last-child {
+    grid-column: 1 / -1;
+  }
+  .hs-card:last-child .card-frame {
+    aspect-ratio: 2 / 1;
+  }
+  .hs-barbox {
+    display: none;
+  }
+  @media (max-width: 640px) {
+    .hs-track {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hs-card:last-child .card-frame {
+      aspect-ratio: 4 / 5;
+    }
+  }
+  /* Pinned mode, switched on by site.ts (wide screens, motion welcome). */
+  .hs.is-pinned {
+    padding-block: 0;
+  }
+  .is-pinned .hs-sticky {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    overflow: clip;
+  }
+  .is-pinned .hs-head {
+    flex-wrap: nowrap;
+    margin-bottom: clamp(16px, 3vh, 36px);
+  }
+  .is-pinned .hs-track {
+    display: flex;
+    width: max-content;
+    margin: 0;
+    gap: clamp(20px, 2.4vw, 36px);
+    padding-inline: max(var(--gut), (100vw - 1320px) / 2);
+    transition: transform 420ms var(--ease-out);
+  }
+  .is-pinned .hs-card {
+    flex: none;
+    width: clamp(300px, 29vw, 430px);
+  }
+  .is-pinned .hs-card:nth-child(even) {
+    margin-top: 3.2vh;
+  }
+  .is-pinned .hs-card .card-frame {
+    aspect-ratio: auto;
+    height: min(56vh, 560px);
+  }
+  .is-pinned .hs-card .fr-par {
+    inset: 0 -8%;
+  }
+  .is-pinned .hs-barbox {
+    display: block;
+    height: 1px;
+    margin-top: clamp(14px, 3vh, 30px);
+    background: var(--line);
+  }
+  .hs-bar {
+    display: block;
+    height: 100%;
+    background: var(--terra);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 240ms linear;
+  }
+</style>

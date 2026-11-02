@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Frame from '../components/ui/Frame.astro';
+import Lines from '../components/ui/Lines.astro';
+import Swash from '../components/ui/Swash.astro';
+import Band from '../components/ui/Band.astro';
+import { dict, type Lang } from '../i18n';
+import pages from '../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(pages, lang);
+---
+
+<Base lang={lang} title={t.staging_title} path="/home-staging/">
+  <section class="wrap sg-top">
+    <Lines text={t.staging_h1} tag="h1" class="h1" />
+    <Swash />
+  </section>
+  <section class="wrap sg-list">
+    {t.staging.map((s, i) => (
+      <article class:list={['sg', { 'sg--flip': i % 2 === 1 }]}>
+        <Frame
+          class="sg-photo"
+          name={s.img}
+          alt={s.alt}
+          sizes="(max-width: 900px) 175vw, 100vw"
+          ratio="5 / 4"
+          from={i % 2 ? 'right' : 'left'}
+          eager={i === 0}
+        />
+        <div class="sg-copy">
+          <span class="num" data-rv="up">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <Lines text={s.t} tag="h2" class="h2" />
+          <p data-rv="up" style="--i:3">
+            {s.p}
+          </p>
+        </div>
+      </article>
+    ))}
+  </section>
+  <div style="height: var(--sec)"></div>
+  <Band lang={lang} />
+</Base>
+
+<style is:global>
+  .sg-top {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: calc(var(--hdr) + clamp(32px, 5vw, 72px));
+    padding-bottom: clamp(32px, 5vw, 64px);
+  }
+  .sg-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(56px, 8vw, 120px);
+  }
+  .sg {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(28px, 6vw, 90px);
+    align-items: center;
+  }
+  .sg--flip {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .sg--flip .sg-photo {
+    order: 2;
+  }
+  .sg-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .sg-copy .h2 {
+    font-size: clamp(30px, 3.2vw, 46px);
+  }
+  @media (max-width: 900px) {
+    .sg,
+    .sg--flip {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .sg--flip .sg-photo {
+      order: 0;
+    }
+  }
+</style>

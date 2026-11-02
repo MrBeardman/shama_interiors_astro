@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import Frame from '../components/ui/Frame.astro';
+import Lines from '../components/ui/Lines.astro';
+import Lit from '../components/ui/Lit.astro';
+import Swash from '../components/ui/Swash.astro';
+import Marquee from '../components/ui/Marquee.astro';
+import Band from '../components/ui/Band.astro';
+import { dict, type Lang } from '../i18n';
+import pages from '../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(pages, lang);
+---
+
+<Base lang={lang} title={t.about_title} path="/about-us/">
+  <section class="ab-top">
+    <div class="wrap ab-grid">
+      <div class="ab-copy">
+        <Lines text={t.about_h1} tag="h1" class="h1" />
+        <Swash />
+        <Lit text={t.about_p} />
+      </div>
+      <Frame
+        class="ab-photo"
+        name="about"
+        alt={t.about_img_alt}
+        sizes="(max-width: 900px) 170vw, 80vw"
+        ratio="4 / 5"
+        from="right"
+        eager
+      />
+    </div>
+  </section>
+  <Marquee lang={lang} />
+  <section class="sec">
+    <div class="wrap jn">
+      <div class="jn-side">
+        <Frame
+          class="jn-photo"
+          name="jana"
+          alt={t.jana_alt}
+          sizes="(max-width: 900px) 90vw, 520px"
+          ratio="1 / 1"
+          reveal="iris"
+        />
+        <div class="jn-signbox" data-rv="wipe">
+          <img class="jn-sign" src="/media/signature.webp" width="900" height="278" alt={t.sign_alt} />
+        </div>
+      </div>
+      <div class="jn-copy">
+        <Lines text={t.head} class="h2" />
+        <p data-rv="up" style="--i:2">
+          {t.jana_intro}
+        </p>
+        <blockquote class="jn-quote" data-rv="up" style="--i:3">
+          <p>„{t.jana_quote}”</p>
+        </blockquote>
+        <img
+          class="jn-badge"
+          src="/media/bcid.webp"
+          width="689"
+          height="290"
+          alt={t.bcid_alt}
+          loading="lazy"
+          data-rv="up"
+          style="--i:4"
+        />
+      </div>
+    </div>
+  </section>
+  <Band lang={lang} />
+</Base>
+
+<style is:global>
+  .ab-top {
+    padding-top: calc(var(--hdr) + clamp(32px, 5vw, 72px));
+    padding-bottom: var(--sec);
+  }
+  .ab-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(36px, 7vw, 100px);
+    align-items: start;
+  }
+  .ab-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .ab-photo {
+    position: sticky;
+    top: calc(var(--hdr) + 24px);
+  }
+  .jn {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(36px, 7vw, 110px);
+    align-items: center;
+  }
+  .jn-side {
+    max-width: 520px;
+    width: 100%;
+    justify-self: center;
+  }
+  .jn-photo .fr-clip {
+    clip-path: circle(50% at 50% 50%);
+  }
+  .jn-sign {
+    clip-path: inset(0);
+    width: min(62%, 300px);
+    height: auto;
+    margin: 0 auto;
+  }
+  .jn-signbox {
+    margin-top: 18px;
+  }
+  .jn-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+  .jn-quote {
+    margin: 0;
+    padding-left: clamp(18px, 2vw, 28px);
+    border-left: 1px solid var(--terra);
+    color: var(--ink);
+    font: italic 300 clamp(21px, 1.9vw, 27px) / 1.45 var(--display);
+  }
+  .jn-badge {
+    width: 150px;
+    height: auto;
+  }
+  @media (max-width: 900px) {
+    .ab-grid,
+    .jn {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .ab-photo {
+      position: relative;
+      top: 0;
+    }
+  }
+</style>

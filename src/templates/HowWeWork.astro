@@ -1,0 +1,168 @@
+---
+import Base from '../layouts/Base.astro';
+import Frame from '../components/ui/Frame.astro';
+import Lines from '../components/ui/Lines.astro';
+import Swash from '../components/ui/Swash.astro';
+import Price from '../components/ui/Price.astro';
+import Band from '../components/ui/Band.astro';
+import { dict, url, type Lang } from '../i18n';
+import pages from '../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(pages, lang);
+---
+
+<Base lang={lang} title={t.how_title} path="/how-we-work/">
+  <section class="hw">
+    <div class="wrap hw-grid">
+      <div class="hw-copy">
+        <Lines text={t.how_h1} tag="h1" class="h1 hw-h1" />
+        <Swash />
+        <p class="hw-lead" data-rv="up" style="--i:3">
+          {t.how_p}
+        </p>
+        <ol class="tl" data-tl>
+          <li class="tl-track" aria-hidden="true">
+            <i data-tl-line></i>
+          </li>
+          {t.steps.map((s, i) => (
+            <li class="tl-step" data-tl-step>
+              <i class="tl-dot" />
+              <span class="num" data-rv="up">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <Lines text={s.t} tag="h2" class="h3" />
+              <p data-rv="up" style="--i:2">
+                {s.p}
+                {s.link && (
+                  <>
+                    {' '}
+                    <a class="tl-link" href={url(lang, '/contact-us/')}>
+                      {s.link}
+                    </a>
+                  </>
+                )}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <Frame
+        class="hw-photo"
+        name="how"
+        alt={t.how_img_alt}
+        sizes="(max-width: 900px) 100vw, 44vw"
+        from="right"
+        eager
+      />
+    </div>
+  </section>
+  <Price lang={lang} />
+  <Band lang={lang} />
+</Base>
+
+<style is:global>
+  .hw {
+    padding-top: calc(var(--hdr) + clamp(32px, 5vw, 72px));
+    padding-bottom: var(--sec);
+  }
+  .hw-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(36px, 6vw, 90px);
+    align-items: start;
+  }
+  .hw-h1 {
+    font-size: clamp(38px, 4.6vw, 68px);
+  }
+  .hw-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .hw-lead {
+    max-width: 38em;
+  }
+  .hw-photo {
+    position: sticky;
+    top: calc(var(--hdr) + 24px);
+    height: calc(100vh - var(--hdr) - 48px);
+    min-height: 420px;
+  }
+  .tl {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(36px, 4.4vw, 60px);
+    margin-top: clamp(20px, 3vw, 40px);
+    padding-left: 44px;
+  }
+  .tl-track {
+    position: absolute;
+    left: 9px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--line);
+  }
+  .tl-track i {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--terra);
+    transform-origin: 50% 0;
+    transition: transform 240ms linear;
+  }
+  .tl-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -44px;
+    top: 0;
+    width: 19px;
+    height: 19px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--paper);
+  }
+  .tl-dot::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--amber);
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 240ms ease,
+      transform 420ms var(--ease-out);
+  }
+  .tl-step.on .tl-dot::after {
+    opacity: 1;
+    transform: none;
+  }
+  .tl-link {
+    display: inline-block;
+    padding-block: 5px;
+    color: var(--terra);
+    font-weight: 500;
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 900px) {
+    .hw-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hw-photo {
+      position: relative;
+      top: 0;
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 4 / 5;
+      order: -1;
+    }
+  }
+</style>

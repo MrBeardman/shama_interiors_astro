@@ -1,0 +1,176 @@
+---
+import Base from '../layouts/Base.astro';
+import Frame from '../components/ui/Frame.astro';
+import Lines from '../components/ui/Lines.astro';
+import Arrow from '../components/ui/Arrow.astro';
+import Band from '../components/ui/Band.astro';
+import { PROJECTS } from '../data/projects';
+import media from '../data/media.json';
+import { dict, url, type Lang } from '../i18n';
+import pages from '../i18n/pages.json';
+
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const t = dict(pages, lang);
+const index = PROJECTS.findIndex((p) => p.slug === slug);
+const project = PROJECTS[index];
+const next = PROJECTS[(index + 1) % PROJECTS.length];
+const size = (n: string) => (media as Record<string, { w: number; h: number }>)[n];
+const [cover, ...rest] = project.photos;
+const coverTall = size(cover.name).h > size(cover.name).w;
+// Portrait photos take the narrow column, landscape the wide one, alternating sides.
+const layout = rest.map((ph, i) => {
+  const m = size(ph.name);
+  const tall = m.h > m.w * 1.05;
+  return { ...ph, ratio: `${m.w} / ${m.h}`, tall, flip: i % 2 === 1 };
+});
+---
+
+<Base lang={lang} title={`${project.title[lang]} | Schama Interiors`} path={`/inspiration/${slug}/`}>
+  <section class:list={['pj-hero', { 'pj-hero--tall': coverTall }]}>
+    <div class="wrap pj-head">
+      <a class="more pj-back" href={url(lang, '/inspirations/')} data-rv="up">
+        <Arrow />
+        <span>{t.insp_h1}</span>
+      </a>
+      <Lines text={project.title[lang]} tag="h1" class="h1" />
+    </div>
+    <Frame
+      class="pj-cover"
+      name={cover.name}
+      alt={cover.alt[lang]}
+      sizes={coverTall ? '(max-width: 900px) 100vw, 60vw' : 'max(100vw, 120vh)'}
+      reveal={false}
+      eager
+      vt={`p-${slug}`}
+    />
+  </section>
+  <section class="wrap pj-list sec">
+    {layout.map((ph, i) => (
+      <div class:list={['pj-item', { 'is-tall': ph.tall, 'is-flip': ph.flip }]}>
+        <Frame
+          name={ph.name}
+          alt={ph.alt[lang]}
+          sizes={ph.tall ? '(max-width: 760px) 125vw, 50vw' : '(max-width: 760px) 125vw, 80vw'}
+          ratio={ph.ratio}
+          from={ph.flip ? 'right' : 'left'}
+          i={i % 2}
+        />
+      </div>
+    ))}
+  </section>
+  <a class="pj-next" href={url(lang, `/inspiration/${next.slug}/`)}>
+    <div class="wrap pj-next-in">
+      <div>
+        <span class="eyebrow">{t.next}</span>
+        <Lines text={next.title[lang]} tag="span" class="pj-next-title h1" />
+      </div>
+      <div class="pj-next-photo">
+        <Frame name={next.photos[0].name} alt="" sizes="(max-width: 760px) 90vw, 600px" imgClass="card-img" />
+      </div>
+    </div>
+  </a>
+  <Band lang={lang} />
+</Base>
+
+<style is:global>
+  .pj-hero {
+    padding-top: calc(var(--hdr) + clamp(16px, 3vw, 40px));
+  }
+  .pj-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: clamp(24px, 3vw, 44px);
+  }
+  .pj-back svg {
+    transform: rotate(180deg);
+  }
+  .pj-cover {
+    height: min(78vh, 56vw);
+    min-height: 300px;
+  }
+  .pj-hero--tall {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    align-items: end;
+    max-width: 100%;
+  }
+  .pj-hero--tall .pj-head {
+    width: auto;
+    margin: 0;
+    padding: 0 clamp(24px, 4vw, 64px) clamp(32px, 5vw, 72px) var(--gut);
+  }
+  .pj-hero--tall .pj-cover {
+    height: calc(100svh - var(--hdr) - 40px);
+    min-height: 460px;
+  }
+  .pj-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 5vw, 72px);
+  }
+  .pj-item {
+    width: min(100%, 72%);
+  }
+  .pj-item.is-tall {
+    width: min(100%, 44%);
+  }
+  .pj-item.is-flip {
+    align-self: flex-end;
+  }
+  .pj-next {
+    display: block;
+    background: var(--sand);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .pj-next-in {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(24px, 5vw, 72px);
+    align-items: center;
+    padding-block: clamp(44px, 6vw, 84px);
+  }
+  .pj-next-title {
+    display: block;
+    margin-top: 12px;
+    font-size: clamp(28px, 4.4vw, 64px);
+    color: var(--ink);
+    font-family: var(--display);
+  }
+  .pj-next-photo .fr {
+    aspect-ratio: 3 / 2;
+    overflow: clip;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pj-next:hover .card-img {
+      transform: scale(1.045);
+    }
+  }
+  @media (max-width: 760px) {
+    .pj-hero--tall {
+      display: block;
+    }
+    .pj-hero--tall .pj-head {
+      width: min(1320px, 100% - 2 * var(--gut));
+      margin-inline: auto;
+      padding: 0 0 24px;
+    }
+    .pj-hero--tall .pj-cover {
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 4 / 5;
+    }
+    .pj-cover {
+      height: 62vw;
+    }
+    .pj-item,
+    .pj-item.is-tall {
+      width: 100%;
+    }
+    .pj-next-in {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,30 @@
+{
+  "name": "schama-interiors-website",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "schamainteriors.es rebuilt in Astro (static pages, EN + ES)",
+  "engines": {
+    "node": ">=20.3"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview --port 4418 --host 127.0.0.1",
+    "media": "node tools/media.mjs",
+    "format": "prettier --write src",
+    "check:format": "prettier --check src"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/josefin-sans": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "astro": "^7.4.5"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.1",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2",
+    "sharp": "^0.35.5"
+  }
+}

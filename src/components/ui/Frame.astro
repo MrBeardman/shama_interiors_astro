@@ -1,0 +1,42 @@
+---
+import Photo from './Photo.astro';
+
+interface Props {
+  name: string;
+  alt: string;
+  sizes: string;
+  /** CSS aspect-ratio; omit when the parent sets the height. */
+  ratio?: string;
+  from?: 'bottom' | 'left' | 'right';
+  reveal?: 'clip' | 'iris' | false;
+  i?: number;
+  eager?: boolean;
+  class?: string;
+  imgClass?: string;
+  vt?: string;
+}
+const {
+  name,
+  alt,
+  sizes,
+  ratio,
+  from = 'bottom',
+  reveal = 'clip',
+  i = 0,
+  eager,
+  class: cls,
+  imgClass,
+  vt,
+} = Astro.props;
+const style = [ratio && `aspect-ratio:${ratio}`, `--i:${i}`, vt && `view-transition-name:${vt}`]
+  .filter(Boolean)
+  .join(';');
+---
+
+<figure class:list={['fr', cls]} style={style} data-rv={reveal || undefined} data-from={reveal ? from : undefined}>
+  <div class="fr-clip">
+    <div class="fr-par" data-par>
+      <Photo name={name} alt={alt} sizes={sizes} eager={eager} class={imgClass} />
+    </div>
+  </div>
+</figure>

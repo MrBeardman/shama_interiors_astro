@@ -1,0 +1,27 @@
+---
+import Lines from './Lines.astro';
+import { dict, type Lang } from '../../i18n';
+import pages from '../../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(pages, lang);
+---
+
+<section class="price sec">
+  <div class="wrap price-grid">
+    <div>
+      <Lines text={t.price_h} class="h2" />
+      <p class="price-sum" data-rv="up" style="--i:3">
+        {t.price_p}
+      </p>
+    </div>
+    <p data-rv="up" style="--i:2">
+      {t.price_from}
+      <span class="price-big">
+        <span data-count="799">799</span>
+        <b>{t.price_unit}</b>
+      </span>
+      {t.price_to}
+    </p>
+  </div>
+</section>

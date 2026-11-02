@@ -1,0 +1,9 @@
+---
+import Project from '../../../templates/Project.astro';
+import { PROJECTS } from '../../../data/projects';
+
+export const getStaticPaths = () => PROJECTS.map((p) => ({ params: { slug: p.slug } }));
+const { slug } = Astro.params;
+---
+
+<Project lang="es" slug={slug} />

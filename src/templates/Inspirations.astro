@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ui/ProjectCard.astro';
+import Lines from '../components/ui/Lines.astro';
+import Swash from '../components/ui/Swash.astro';
+import Band from '../components/ui/Band.astro';
+import { PROJECTS } from '../data/projects';
+import { dict, type Lang } from '../i18n';
+import pages from '../i18n/pages.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(pages, lang);
+// Column spans chosen so portrait covers land in the narrow slots.
+const spans = [7, 5, 5, 7, 5, 7, 12];
+---
+
+<Base lang={lang} title={t.insp_title} path="/inspirations/">
+  <section class="ig-top wrap">
+    <Lines text={t.insp_h1} tag="h1" class="h1" />
+    <Swash />
+  </section>
+  <section class="wrap ig">
+    {PROJECTS.map((p, i) => (
+      <div style={`--span:${spans[i]}`} class="ig-cell">
+        <ProjectCard project={p} lang={lang} index={i} sizes="(max-width: 760px) 170vw, 1400px" />
+      </div>
+    ))}
+  </section>
+  <div style="height: var(--sec)"></div>
+  <Band lang={lang} />
+</Base>
+
+<style is:global>
+  .ig-top {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: calc(var(--hdr) + clamp(32px, 5vw, 72px));
+    padding-bottom: clamp(32px, 5vw, 64px);
+  }
+  .ig {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(36px, 4vw, 60px) clamp(16px, 2.2vw, 32px);
+  }
+  .ig-cell {
+    grid-column: span var(--span);
+  }
+  .ig-cell .card-frame {
+    height: clamp(340px, 44vw, 660px);
+  }
+  @media (max-width: 760px) {
+    .ig {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .ig-cell {
+      grid-column: auto;
+    }
+    .ig-cell .card-frame {
+      height: auto;
+      aspect-ratio: 4 / 5;
+    }
+  }
+</style>

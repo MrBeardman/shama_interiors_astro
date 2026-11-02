@@ -1,0 +1,36 @@
+{
+  "en": {
+    "skip": "Skip to content",
+    "brand": "Schama Interiors",
+    "rights": "All rights reserved",
+    "menu": "Menu",
+    "close": "Close",
+    "nav": [
+      { "href": "/about-us/", "label": "About us" },
+      { "href": "/inspirations/", "label": "Inspirations" },
+      { "href": "/how-we-work/", "label": "How we work" },
+      { "href": "/home-staging/", "label": "Home Staging" },
+      { "href": "/contact-us/", "label": "Contact us" }
+    ],
+    "consult": "Free consultation",
+    "ready": "Ready to transform your space?",
+    "switch": "Ver en español"
+  },
+  "es": {
+    "skip": "Ir al contenido",
+    "brand": "Schama Interiors",
+    "rights": "Todos los derechos reservados",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "nav": [
+      { "href": "/about-us/", "label": "Sobre nosotros" },
+      { "href": "/inspirations/", "label": "Inspiraciones" },
+      { "href": "/how-we-work/", "label": "Cómo trabajamos" },
+      { "href": "/home-staging/", "label": "Home staging" },
+      { "href": "/contact-us/", "label": "Contáctanos" }
+    ],
+    "consult": "Consulta gratuita",
+    "ready": "Contáctanos hoy para una consulta gratuita",
+    "switch": "View in English"
+  }
+}

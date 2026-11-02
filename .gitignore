@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+scrape/
+review/
+.env
+.DS_Store
+*.log

@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/ui/Arrow.astro';
+import { dict } from '../i18n';
+import pages from '../i18n/pages.json';
+import chrome from '../i18n/chrome.json';
+
+const t = dict(pages, 'en');
+const c = dict(chrome, 'en');
+---
+
+<Base lang="en" title={t.notfound_title} path="/">
+  <section class="wrap sec" style="padding-top: calc(var(--hdr) + var(--sec)); min-height: 70vh">
+    <h1 class="h1" style="margin-bottom: 28px">
+      {t.notfound}
+    </h1>
+    <a class="more" href="/inspirations/">
+      <span>{c.nav[1].label}</span>
+      <Arrow />
+    </a>
+  </section>
+</Base>

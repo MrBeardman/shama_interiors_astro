@@ -1,7 +1,10 @@
 # CLAUDE.md: Schama Interiors website
 
 Rebuild of **schamainteriors.es** (Jana Schama's interior design studio; WordPress + Elementor + TranslatePress) in
-Astro, on the Alture marketing-site stack (`astro-marketing-site` skill). Local only so far: not deployed, no git repo.
+Astro, on the Alture marketing-site stack (`astro-marketing-site` skill).
+
+- Repo: https://github.com/MrBeardman/shama_interiors_astro (branch `main`)
+- Preview: https://mediumvioletred-gerbil-756242.hostingersite.com (Hostinger, rebuilds on every push to `main`; `noindex`)
 
 Read `docs/BRAND.md` and `docs/STATUS.md` next (new copy awaiting approval, typo fixes, open questions).
 
@@ -33,6 +36,4 @@ npm run media      # scrape/orig -> public/media + src/data/media.json
 ## Gotchas
 - `clip-path` cannot animate to `none`: revealed elements rest on an explicit end shape (`inset(0)`, `circle(...)`).
 - Scroll-linked elements set `transform` directly and carry a short CSS transition, so wheel steps glide.
-- Pinned gallery: at 1440 the capture's `clippedText` lists cards scrolled off to the side of `.hs-sticky`. That is the
-  gallery working (the track moves through a clipped window), not a cut glyph; check it in the screenshots.
 - Other local projects use ports nearby: `astro preview` silently moves on if a port is taken. Check the page title.

@@ -1,6 +1,7 @@
 # Status
 
-Local rebuild, all 26 old URLs (6 pages + 7 projects, EN + ES) plus a 404. Not deployed. Content needs client approval.
+All 26 old URLs (6 pages + 7 projects, EN + ES) plus a 404, live on the preview URL in CLAUDE.md. Content needs client
+approval. Verify loop: PASS on 2026-11-02 (round 3).
 
 ## New copy (not on the old site, for approval)
 - Home H1: "Innovative and timeless spaces" / "Espacios innovadores y atemporales" and the eyebrow under the header. Both
@@ -40,4 +41,3 @@ Local rebuild, all 26 old URLs (6 pages + 7 projects, EN + ES) plus a 404. Not d
 ## Known
 - Photos limited by their source file at 2x density: hero hover photos (largest 2048 px), project covers on very wide
   screens (2560 px), the portrait (1024 px).
-- `clippedText` at 1440 on home lists gallery cards off to the side of the pinned gallery (see CLAUDE.md).

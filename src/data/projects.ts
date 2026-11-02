@@ -31,7 +31,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: 'man-cave',
-    title: { en: 'Man cave', es: 'Cuarto de hombre' },
+    title: { en: 'Man cave', es: 'Cuarto de hombre' },
     photos: [
       p(
         'man-cave-1',
@@ -124,7 +124,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: '20th-floor-apartment',
-    title: { en: '20th floor apartment', es: 'Apartamento en la planta 20' },
+    title: { en: '20th floor apartment', es: 'Apartamento en la planta 20' },
     photos: [
       p(
         '20th-floor-apartment-1',

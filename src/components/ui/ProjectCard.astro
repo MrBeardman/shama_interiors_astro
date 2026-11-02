@@ -10,7 +10,13 @@ interface Props {
   sizes?: string;
   class?: string;
 }
-const { project, lang, index, sizes = '(max-width: 900px) 170vw, 900px', class: cls } = Astro.props;
+const {
+  project,
+  lang,
+  index,
+  sizes = '(max-width: 900px) 200vw, (prefers-reduced-motion: reduce) 1500px, 900px',
+  class: cls,
+} = Astro.props;
 const cover = project.photos[0];
 ---
 

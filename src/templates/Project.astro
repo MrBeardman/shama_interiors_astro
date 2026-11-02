@@ -32,7 +32,7 @@ const layout = rest.map((ph, i) => {
         <Arrow />
         <span>{t.insp_h1}</span>
       </a>
-      <Lines text={project.title[lang]} tag="h1" class="h1" />
+      <Lines text={project.title[lang]} tag="h1" class="h1 pj-h1" />
     </div>
     <Frame
       class="pj-cover"
@@ -65,7 +65,7 @@ const layout = rest.map((ph, i) => {
         <Lines text={next.title[lang]} tag="span" class="pj-next-title h1" />
       </div>
       <div class="pj-next-photo">
-        <Frame name={next.photos[0].name} alt="" sizes="(max-width: 760px) 90vw, 600px" imgClass="card-img" />
+        <Frame name={next.photos[0].name} alt="" sizes="(max-width: 760px) 110vw, 600px" imgClass="card-img" />
       </div>
     </div>
   </a>
@@ -82,6 +82,9 @@ const layout = rest.map((ph, i) => {
     align-items: flex-start;
     gap: 10px;
     padding-bottom: clamp(24px, 3vw, 44px);
+  }
+  .pj-h1 {
+    font-size: clamp(38px, 4.6vw, 68px);
   }
   .pj-back svg {
     transform: rotate(180deg);
